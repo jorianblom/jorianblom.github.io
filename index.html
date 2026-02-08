@@ -8,62 +8,106 @@
 
     <style>
         body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 20px;
-            background-color: #f4f4f4;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+            background-color: #f6f6f6;
+            margin: 0;
+            padding: 16px;
         }
 
         .container {
-            max-width: 800px;
+            max-width: 480px;
             margin: 0 auto;
         }
 
         .logo {
-            max-width: 350px;
-            margin: 0 auto 20px;
+            max-width: 260px;
+            display: block;
+            margin: 20px auto;
+        }
+
+        p {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #444;
         }
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
+            grid-template-columns: 1fr;
+            gap: 16px;
         }
 
         .tegel {
             background-color: #fff;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
         }
 
-        select {
-            padding: 10px;
-            font-size: 16px;
-            width: 100%;
-            max-width: 250px;
+        .tegel h2 {
+            margin: 0 0 4px 0;
+            font-size: 20px;
         }
 
-        button {
-            margin-top: 20px;
-            padding: 12px 25px;
+        .prijs-per-pot {
+            color: #666;
+            margin-bottom: 14px;
+        }
+
+        /* iOS knoppen */
+        .keuze {
+            display: flex;
+            gap: 10px;
+        }
+
+        .keuze button {
+            flex: 1;
+            padding: 14px 0;
+            border-radius: 14px;
+            border: 1px solid #ddd;
+            background-color: #f9f9f9;
             font-size: 16px;
-            background-color: #f4b400;
-            border: none;
-            border-radius: 8px;
+            font-weight: 600;
             cursor: pointer;
-            font-weight: bold;
         }
 
-        button:hover {
-            background-color: #e0a800;
+        .keuze button.actief {
+            background-color: #007aff;
+            color: #fff;
+            border-color: #007aff;
         }
 
-        .prijs {
-            margin-top: 15px;
+        .totaal {
+            margin-top: 16px;
             font-size: 18px;
-            font-weight: bold;
+            font-weight: 700;
+        }
+
+        .betaal {
+            width: 100%;
+            margin-top: 18px;
+            padding: 16px;
+            font-size: 17px;
+            background-color: #f4b400;
+            color: #000;
+            border: none;
+            border-radius: 14px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .betaal:active {
+            transform: scale(0.98);
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                max-width: 900px;
+            }
+
+            .grid {
+                grid-template-columns: 1fr 1fr;
+            }
         }
     </style>
 </head>
@@ -72,54 +116,89 @@
 <div class="container">
     <img src="logo.png" alt="Blom Honing" class="logo">
 
-    <p>Kies het aantal potjes honing en betaal direct via iDEAL.</p>
+    <p>Kies het aantal potjes (max. 3 per product)</p>
 
     <div class="grid">
-        <div class="tegel">
+
+        <!-- 250g -->
+        <div class="tegel" data-gewicht="250">
             <h2>Honing 250g</h2>
-            <p>€5,00 per pot</p>
+            <div class="prijs-per-pot">€5,00 per pot</div>
 
-            <label for="aantal">Aantal potjes:</label><br><br>
-            <select id="aantal" onchange="updatePrijs()">
-                <option value="1">1 pot</option>
-                <option value="2">2 potten</option>
-                <option value="3">3 potten</option>
-                <option value="4">4 potten</option>
-                <option value="5">5 potten</option>
-            </select>
+            <div class="keuze">
+                <button onclick="kiesAantal(250,1,this)" class="actief">1</button>
+                <button onclick="kiesAantal(250,2,this)">2</button>
+                <button onclick="kiesAantal(250,3,this)">3</button>
+            </div>
 
-            <div class="prijs" id="prijs">Totaal: €5,00</div>
+            <div class="totaal" id="totaal250">Totaal: €5,00</div>
 
-            <button onclick="betalen()">Betalen</button>
+            <button class="betaal" onclick="betalen(250)">Betalen</button>
         </div>
+
+        <!-- 450g -->
+        <div class="tegel" data-gewicht="450">
+            <h2>Honing 450g</h2>
+            <div class="prijs-per-pot">€8,00 per pot</div>
+
+            <div class="keuze">
+                <button onclick="kiesAantal(450,1,this)" class="actief">1</button>
+                <button onclick="kiesAantal(450,2,this)">2</button>
+                <button onclick="kiesAantal(450,3,this)">3</button>
+            </div>
+
+            <div class="totaal" id="totaal450">Totaal: €8,00</div>
+
+            <button class="betaal" onclick="betalen(450)">Betalen</button>
+        </div>
+
     </div>
 </div>
 
 <script>
-    const prijsPerPot = 5;
-
-    const betaalLinks = {
-        1: "https://www.ing.nl/payreq/m/?trxid=LINK_VOOR_1",
-        2: "https://www.ing.nl/payreq/m/?trxid=LINK_VOOR_2",
-        3: "https://www.ing.nl/payreq/m/?trxid=LINK_VOOR_3",
-        4: "https://www.ing.nl/payreq/m/?trxid=LINK_VOOR_4",
-        5: "https://www.ing.nl/payreq/m/?trxid=LINK_VOOR_5"
+    const prijzen = {
+        250: 5,
+        450: 8
     };
 
-    function updatePrijs() {
-        const aantal = document.getElementById("aantal").value;
-        const totaal = aantal * prijsPerPot;
-        document.getElementById("prijs").innerText = "Totaal: €" + totaal + ",00";
+    const selectie = {
+        250: 1,
+        450: 1
+    };
+
+    const betaalLinks = {
+        250: {
+            1: "https://www.ing.nl/payreq/m/?trxid=LINK_250_1",
+            2: "https://www.ing.nl/payreq/m/?trxid=LINK_250_2",
+            3: "https://www.ing.nl/payreq/m/?trxid=LINK_250_3"
+        },
+        450: {
+            1: "https://www.ing.nl/payreq/m/?trxid=LINK_450_1",
+            2: "https://www.ing.nl/payreq/m/?trxid=LINK_450_2",
+            3: "https://www.ing.nl/payreq/m/?trxid=LINK_450_3"
+        }
+    };
+
+    function kiesAantal(gewicht, aantal, knop) {
+        selectie[gewicht] = aantal;
+
+        const container = knop.parentElement;
+        [...container.children].forEach(b => b.classList.remove("actief"));
+        knop.classList.add("actief");
+
+        const totaal = prijzen[gewicht] * aantal;
+        document.getElementById("totaal" + gewicht).innerText =
+            "Totaal: €" + totaal + ",00";
     }
 
-    function betalen() {
-        const aantal = document.getElementById("aantal").value;
-        const link = betaalLinks[aantal];
+    function betalen(gewicht) {
+        const aantal = selectie[gewicht];
+        const link = betaalLinks[gewicht][aantal];
 
         if (link) {
             window.open(link, "_blank");
         } else {
-            alert("Geen betaallink beschikbaar voor dit aantal.");
+            alert("Geen betaallink beschikbaar.");
         }
     }
 </script>
