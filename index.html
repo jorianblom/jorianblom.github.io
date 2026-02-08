@@ -27,37 +27,26 @@
 
         p {
             text-align: center;
-            margin-bottom: 20px;
             color: #444;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 16px;
+            margin-bottom: 16px;
         }
 
         .tegel {
             background-color: #fff;
-            padding: 20px;
+            padding: 22px;
             border-radius: 16px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.08);
         }
 
-        .tegel h2 {
-            margin: 0 0 4px 0;
+        h2 {
+            margin-top: 0;
             font-size: 20px;
         }
 
-        .prijs-per-pot {
-            color: #666;
-            margin-bottom: 14px;
-        }
-
-        /* iOS knoppen */
         .keuze {
             display: flex;
             gap: 10px;
+            margin-bottom: 16px;
         }
 
         .keuze button {
@@ -77,8 +66,13 @@
             border-color: #007aff;
         }
 
+        .aantal {
+            display: none;
+            margin-top: 10px;
+        }
+
         .totaal {
-            margin-top: 16px;
+            margin-top: 14px;
             font-size: 18px;
             font-weight: 700;
         }
@@ -94,20 +88,11 @@
             border-radius: 14px;
             font-weight: 700;
             cursor: pointer;
+            display: none;
         }
 
         .betaal:active {
             transform: scale(0.98);
-        }
-
-        @media (min-width: 768px) {
-            .container {
-                max-width: 900px;
-            }
-
-            .grid {
-                grid-template-columns: 1fr 1fr;
-            }
         }
     </style>
 </head>
@@ -116,40 +101,32 @@
 <div class="container">
     <img src="logo.png" alt="Blom Honing" class="logo">
 
-    <p>Kies het aantal potjes (max. 3 per product)</p>
+    <p>Stap 1: kies het formaat honing</p>
 
-    <div class="grid">
+    <div class="tegel">
 
-        <!-- 250g -->
-        <div class="tegel" data-gewicht="250">
-            <h2>Honing 250g</h2>
-            <div class="prijs-per-pot">€5,00 per pot</div>
-
-            <div class="keuze">
-                <button onclick="kiesAantal(250,1,this)" class="actief">1</button>
-                <button onclick="kiesAantal(250,2,this)">2</button>
-                <button onclick="kiesAantal(250,3,this)">3</button>
-            </div>
-
-            <div class="totaal" id="totaal250">Totaal: €5,00</div>
-
-            <button class="betaal" onclick="betalen(250)">Betalen</button>
+        <!-- Stap 1: gewicht -->
+        <h2>Formaat</h2>
+        <div class="keuze">
+            <button onclick="kiesGewicht(250, this)">Klein<br>250g</button>
+            <button onclick="kiesGewicht(450, this)">Groot<br>450g</button>
         </div>
 
-        <!-- 450g -->
-        <div class="tegel" data-gewicht="450">
-            <h2>Honing 450g</h2>
-            <div class="prijs-per-pot">€8,00 per pot</div>
+        <!-- Stap 2: aantal -->
+        <div class="aantal" id="aantalKeuze">
+            <h2>Stap 2: aantal potjes</h2>
 
             <div class="keuze">
-                <button onclick="kiesAantal(450,1,this)" class="actief">1</button>
-                <button onclick="kiesAantal(450,2,this)">2</button>
-                <button onclick="kiesAantal(450,3,this)">3</button>
+                <button onclick="kiesAantal(1, this)">1</button>
+                <button onclick="kiesAantal(2, this)">2</button>
+                <button onclick="kiesAantal(3, this)">3</button>
             </div>
 
-            <div class="totaal" id="totaal450">Totaal: €8,00</div>
+            <div class="totaal" id="totaal"></div>
 
-            <button class="betaal" onclick="betalen(450)">Betalen</button>
+            <button class="betaal" id="betaalKnop" onclick="betalen()">
+                Betalen
+            </button>
         </div>
 
     </div>
@@ -159,11 +136,6 @@
     const prijzen = {
         250: 5,
         450: 8
-    };
-
-    const selectie = {
-        250: 1,
-        450: 1
     };
 
     const betaalLinks = {
@@ -179,21 +151,37 @@
         }
     };
 
-    function kiesAantal(gewicht, aantal, knop) {
-        selectie[gewicht] = aantal;
+    let gekozenGewicht = null;
+    let gekozenAantal = null;
+
+    function kiesGewicht(gewicht, knop) {
+        gekozenGewicht = gewicht;
+        gekozenAantal = null;
+
+        document.querySelectorAll('.keuze button').forEach(b => b.classList.remove("actief"));
+        knop.classList.add("actief");
+
+        document.getElementById("aantalKeuze").style.display = "block";
+        document.getElementById("totaal").innerText = "";
+        document.getElementById("betaalKnop").style.display = "none";
+    }
+
+    function kiesAantal(aantal, knop) {
+        gekozenAantal = aantal;
 
         const container = knop.parentElement;
         [...container.children].forEach(b => b.classList.remove("actief"));
         knop.classList.add("actief");
 
-        const totaal = prijzen[gewicht] * aantal;
-        document.getElementById("totaal" + gewicht).innerText =
+        const totaal = prijzen[gekozenGewicht] * gekozenAantal;
+        document.getElementById("totaal").innerText =
             "Totaal: €" + totaal + ",00";
+
+        document.getElementById("betaalKnop").style.display = "block";
     }
 
-    function betalen(gewicht) {
-        const aantal = selectie[gewicht];
-        const link = betaalLinks[gewicht][aantal];
+    function betalen() {
+        const link = betaalLinks[gekozenGewicht][gekozenAantal];
 
         if (link) {
             window.open(link, "_blank");
