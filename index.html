@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blom Honing</title>
     <meta name="robots" content="noindex, nofollow">
+
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -12,52 +13,116 @@
             margin: 20px;
             background-color: #f4f4f4;
         }
+
         .container {
             max-width: 800px;
             margin: 0 auto;
         }
+
         .logo {
             max-width: 350px;
             margin: 0 auto 20px;
         }
+
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px;
-            margin-top: 20px;
+            margin-top: 30px;
         }
+
         .tegel {
             background-color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
-        .tegel:hover {
-            transform: scale(1.05);
-        }
-        .tegel a {
-            text-decoration: none;
-            color: #333;
-            font-weight: bold;
-            display: block;
+
+        select {
             padding: 10px;
+            font-size: 16px;
+            width: 100%;
+            max-width: 250px;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 12px 25px;
+            font-size: 16px;
+            background-color: #f4b400;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: #e0a800;
+        }
+
+        .prijs {
+            margin-top: 15px;
+            font-size: 18px;
+            font-weight: bold;
         }
     </style>
 </head>
+
 <body>
-    <div class="container">
-        <img src="logo.png" alt="Logo" class="logo">
-        <h1></h1>
-        <p>Kies een van de onderstaande producten om een betaling te doen.</p>
-        <div class="grid">
-            <div class="tegel">
-                <a href="https://www.ing.nl/payreq/m/?trxid=vsKKJqm6S5nwwD7TVoBbGVGEYnJL7T7v" target="_blank">Honing (klein) 250g - €5,00</a>
-            </div>
-            <div class="tegel">
-                <a href="https://www.ing.nl/payreq/m/?trxid=zHA2tEtf2c8oGTwwXzJtxvf2MaIIkMiQ" target="_blank">Honing (groot) 450g - €8,00</a>
-            </div>
+<div class="container">
+    <img src="logo.png" alt="Blom Honing" class="logo">
+
+    <p>Kies het aantal potjes honing en betaal direct via iDEAL.</p>
+
+    <div class="grid">
+        <div class="tegel">
+            <h2>Honing 250g</h2>
+            <p>€5,00 per pot</p>
+
+            <label for="aantal">Aantal potjes:</label><br><br>
+            <select id="aantal" onchange="updatePrijs()">
+                <option value="1">1 pot</option>
+                <option value="2">2 potten</option>
+                <option value="3">3 potten</option>
+                <option value="4">4 potten</option>
+                <option value="5">5 potten</option>
+            </select>
+
+            <div class="prijs" id="prijs">Totaal: €5,00</div>
+
+            <button onclick="betalen()">Betalen</button>
         </div>
     </div>
+</div>
+
+<script>
+    const prijsPerPot = 5;
+
+    const betaalLinks = {
+        1: "https://www.ing.nl/payreq/m/?trxid=LINK_VOOR_1",
+        2: "https://www.ing.nl/payreq/m/?trxid=LINK_VOOR_2",
+        3: "https://www.ing.nl/payreq/m/?trxid=LINK_VOOR_3",
+        4: "https://www.ing.nl/payreq/m/?trxid=LINK_VOOR_4",
+        5: "https://www.ing.nl/payreq/m/?trxid=LINK_VOOR_5"
+    };
+
+    function updatePrijs() {
+        const aantal = document.getElementById("aantal").value;
+        const totaal = aantal * prijsPerPot;
+        document.getElementById("prijs").innerText = "Totaal: €" + totaal + ",00";
+    }
+
+    function betalen() {
+        const aantal = document.getElementById("aantal").value;
+        const link = betaalLinks[aantal];
+
+        if (link) {
+            window.open(link, "_blank");
+        } else {
+            alert("Geen betaallink beschikbaar voor dit aantal.");
+        }
+    }
+</script>
+
 </body>
 </html>
