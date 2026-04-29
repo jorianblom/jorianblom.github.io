@@ -1,194 +1,283 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blom Honing</title>
-    <meta name="robots" content="noindex, nofollow">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blom Honing</title>
 
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
-            background-color: #f6f6f6;
-            margin: 0;
-            padding: 16px;
-        }
+<style>
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background-color: #fff6e5; /* egale honing/crème tint */
+    margin: 0;
+    padding: 12px;
+    color: #3b2f1e;
+    padding-bottom: 100px;
+}
 
-        .container {
-            max-width: 480px;
-            margin: 0 auto;
-        }
+.container {
+    max-width: 420px;
+    margin: 0 auto;
+}
 
-        .logo {
-            max-width: 260px;
-            display: block;
-            margin: 20px auto;
-        }
+.logo {
+    max-width: 180px;
+    display: block;
+    margin: 20px auto 10px;
+}
 
-        p {
-            text-align: center;
-            color: #444;
-            margin-bottom: 16px;
-        }
+p {
+    text-align: center;
+    color: #6b5a3c;
+    margin: 0 0 14px;
+    font-size: 14px;
+    line-height: 1.4;
+}
 
-        .tegel {
-            background-color: #fff;
-            padding: 22px;
-            border-radius: 16px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-        }
+.tegel {
+    background: #fffdf7;
+    padding: 18px;
+    border-radius: 20px;
+    box-shadow: 0 6px 18px rgba(120, 80, 20, 0.10);
+    border: 1px solid #f1e2b8;
+}
 
-        h2 {
-            margin-top: 0;
-            font-size: 20px;
-        }
+h2 {
+    font-size: 18px;
+    margin: 0 0 14px;
+}
 
-        .keuze {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 16px;
-        }
+label {
+    font-weight: 600;
+    display: block;
+    margin: 10px 0 6px;
+    font-size: 14px;
+    color: #4a3b22;
+}
 
-        .keuze button {
-            flex: 1;
-            padding: 14px 0;
-            border-radius: 14px;
-            border: 1px solid #ddd;
-            background-color: #f9f9f9;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-        }
+select {
+    width: 100%;
+    padding: 16px;
+    border-radius: 14px;
+    border: 1px solid #e6d3a3;
+    font-size: 16px;
+    background-color: #fff8e6;
+    margin-bottom: 6px;
+}
 
-        .keuze button.actief {
-            background-color: #007aff;
-            color: #fff;
-            border-color: #007aff;
-        }
+select:focus {
+    outline: none;
+    border-color: #d99a1d;
+}
 
-        .aantal {
-            display: none;
-            margin-top: 10px;
-        }
+.totaal {
+    margin-top: 14px;
+    font-size: 18px;
+    font-weight: 700;
+    text-align: center;
+    padding: 10px;
+    background: rgba(217,154,29,0.08);
+    border-radius: 12px;
+}
 
-        .totaal {
-            margin-top: 14px;
-            font-size: 18px;
-            font-weight: 700;
-        }
+.betaal {
+    width: 100%;
+    margin-top: 14px;
+    padding: 16px;
+    font-size: 17px;
+    background: linear-gradient(135deg, #f4b400, #d99a1d);
+    color: white;
+    border: none;
+    border-radius: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    display: none;
+    box-shadow: 0 6px 14px rgba(217,154,29,0.30);
+}
 
-        .betaal {
-            width: 100%;
-            margin-top: 18px;
-            padding: 16px;
-            font-size: 17px;
-            background-color: #f4b400;
-            color: #000;
-            border: none;
-            border-radius: 14px;
-            font-weight: 700;
-            cursor: pointer;
-            display: none;
-        }
+/* 📱 Sticky checkout bar (Bol.com stijl) */
+.sticky-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #fffdf7;
+    border-top: 1px solid #f1e2b8;
+    box-shadow: 0 -6px 18px rgba(0,0,0,0.08);
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 14px;
+    z-index: 999;
+}
 
-        .betaal:active {
-            transform: scale(0.98);
-        }
-    </style>
+.sticky-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+#stickyText {
+    font-size: 13px;
+    color: #6b5a3c;
+}
+
+#stickyPrijs {
+    font-size: 16px;
+    font-weight: 700;
+    color: #3b2f1e;
+}
+
+.sticky-bar button {
+    background: linear-gradient(135deg, #f4b400, #d99a1d);
+    color: white;
+    border: none;
+    padding: 12px 16px;
+    border-radius: 14px;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.sticky-bar button:active {
+    transform: scale(0.97);
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+        padding-bottom: 100px;
+    }
+
+    .tegel {
+        padding: 16px;
+        border-radius: 18px;
+    }
+
+    select {
+        padding: 14px;
+        font-size: 15px;
+    }
+
+    h2 {
+        font-size: 17px;
+    }
+}
+</style>
 </head>
 
 <body>
+
 <div class="container">
-    <img src="logo.png" alt="Blom Honing" class="logo">
 
-    <p>Kies het formaat en aantal potjes en betaal met iDEAL/Wero</p>
+<img src="logo.png" alt="Blom Honing" class="logo">
 
-    <div class="tegel">
+<p>Kies je potjes honing en betaal eenvoudig met iDEAL/Wero</p>
 
-        <!-- Stap 1: gewicht -->
-        <h2>Stap 1: kies het formaat honing</h2>
-        <div class="keuze">
-            <button onclick="kiesGewicht(250, this)">Klein<br>250g</button>
-            <button onclick="kiesGewicht(450, this)">Groot<br>450g</button>
-        </div>
+<div class="tegel">
 
-        <!-- Stap 2: aantal -->
-        <div class="aantal" id="aantalKeuze">
-            <h2>Stap 2: aantal potjes</h2>
+<h2>Bestelling</h2>
 
-            <div class="keuze">
-                <button onclick="kiesAantal(1, this)">1</button>
-                <button onclick="kiesAantal(2, this)">2</button>
-                <button onclick="kiesAantal(3, this)">3</button>
-            </div>
+<label>Kleine potjes (250g)</label>
+<select id="klein" onchange="bereken()">
+    <option value="0">0</option>
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+</select>
 
-            <div class="totaal" id="totaal"></div>
+<label>Grote potjes (450g)</label>
+<select id="groot" onchange="bereken()">
+    <option value="0">0</option>
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+</select>
 
-            <button class="betaal" id="betaalKnop" onclick="betalen()">
-                Betalen
-            </button>
-        </div>
+<div class="totaal" id="totaal"></div>
 
+</div>
+</div>
+
+<!-- Sticky checkout bar -->
+<div id="stickyBar" class="sticky-bar">
+    <div class="sticky-info">
+        <div id="stickyText">Geen selectie</div>
+        <div id="stickyPrijs">€0,00</div>
     </div>
+    <button onclick="betalen()">Afrekenen</button>
 </div>
 
 <script>
-    const prijzen = {
-        250: 5,
-        450: 8
-    };
+const prijsKlein = 5;
+const prijsGroot = 8;
 
-    const betaalLinks = {
-        250: {
-            1: "https://www.ing.nl/payreq/m/?trxid=LINK_250_1",
-            2: "https://www.ing.nl/payreq/m/?trxid=LINK_250_2",
-            3: "https://www.ing.nl/payreq/m/?trxid=LINK_250_3"
-        },
-        450: {
-            1: "https://www.ing.nl/payreq/m/?trxid=LINK_450_1",
-            2: "https://www.ing.nl/payreq/m/?trxid=LINK_450_2",
-            3: "https://www.ing.nl/payreq/m/?trxid=LINK_450_3"
-        }
-    };
+// 15 combinaties (invullen met ING links)
+const betaalLinks = {
+    "k0_g1": "",
+    "k0_g2": "",
+    "k0_g3": "",
 
-    let gekozenGewicht = null;
-    let gekozenAantal = null;
+    "k1_g0": "",
+    "k1_g1": "",
+    "k1_g2": "",
+    "k1_g3": "",
 
-    function kiesGewicht(gewicht, knop) {
-        gekozenGewicht = gewicht;
-        gekozenAantal = null;
+    "k2_g0": "",
+    "k2_g1": "",
+    "k2_g2": "",
+    "k2_g3": "",
 
-        document.querySelectorAll('.keuze button').forEach(b => b.classList.remove("actief"));
-        knop.classList.add("actief");
+    "k3_g0": "",
+    "k3_g1": "",
+    "k3_g2": "",
+    "k3_g3": ""
+};
 
-        document.getElementById("aantalKeuze").style.display = "block";
-        document.getElementById("totaal").innerText = "";
-        document.getElementById("betaalKnop").style.display = "none";
-    }
+function bereken() {
+    const klein = parseInt(document.getElementById("klein").value);
+    const groot = parseInt(document.getElementById("groot").value);
 
-    function kiesAantal(aantal, knop) {
-        gekozenAantal = aantal;
+    const totaal = (klein * prijsKlein) + (groot * prijsGroot);
 
-        const container = knop.parentElement;
-        [...container.children].forEach(b => b.classList.remove("actief"));
-        knop.classList.add("actief");
+    const stickyBar = document.getElementById("stickyBar");
 
-        const totaal = prijzen[gekozenGewicht] * gekozenAantal;
+    if (totaal > 0) {
+        stickyBar.style.display = "flex";
+
+        document.getElementById("stickyText").innerText =
+            `${klein} klein • ${groot} groot`;
+
+        document.getElementById("stickyPrijs").innerText =
+            `€${totaal},00`;
+
         document.getElementById("totaal").innerText =
-            "Totaal: €" + totaal + ",00";
+            `${klein} klein • ${groot} groot\n€${totaal},00`;
 
-        document.getElementById("betaalKnop").style.display = "block";
+    } else {
+        stickyBar.style.display = "none";
+        document.getElementById("totaal").innerText = "";
+    }
+}
+
+function betalen() {
+    const klein = parseInt(document.getElementById("klein").value);
+    const groot = parseInt(document.getElementById("groot").value);
+
+    if (klein === 0 && groot === 0) {
+        alert("Kies minimaal 1 potje.");
+        return;
     }
 
-    function betalen() {
-        const link = betaalLinks[gekozenGewicht][gekozenAantal];
+    const key = `k${klein}_g${groot}`;
+    const link = betaalLinks[key];
 
-        if (link) {
-            window.open(link, "_blank");
-        } else {
-            alert("Geen betaallink beschikbaar.");
-        }
+    if (link) {
+        window.open("https://www.ing.nl/payreq/m/?trxid=" + link, "_blank");
+    } else {
+        alert("Nog geen betaallink ingevuld voor deze combinatie.");
     }
+}
 </script>
 
 </body>
