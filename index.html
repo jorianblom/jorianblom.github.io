@@ -1,0 +1,194 @@
+
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Blom Honing</title>
+
+<style>
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background-color: #fff6e5;
+    margin: 0;
+    padding: 12px;
+    padding-bottom: 30px;
+    color: #3b2f1e;
+}
+
+.container {
+    max-width: 420px;
+    margin: 0 auto;
+}
+
+.logo {
+    max-width: 180px;
+    width: 100%;
+    display: block;
+    margin: 20px auto 25px;
+}
+
+.tegel {
+    background: #fffdf7;
+    padding: 24px 18px;
+    border-radius: 20px;
+    box-shadow: 0 6px 18px rgba(120, 80, 20, 0.10);
+    border: 1px solid #f1e2b8;
+}
+
+h1 {
+    font-size: 22px;
+    text-align: center;
+    color: #8a5b12;
+    margin: 0 0 12px;
+}
+
+p {
+    text-align: center;
+    color: #6b5a3c;
+    font-size: 15px;
+    line-height: 1.5;
+    margin-bottom: 22px;
+}
+
+.emoji {
+    font-size: 38px;
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+h2 {
+    font-size: 18px;
+    margin: 28px 0 12px;
+    color: #4a3b22;
+}
+
+label {
+    font-weight: 600;
+    display: block;
+    margin: 12px 0 6px;
+    font-size: 14px;
+    color: #4a3b22;
+}
+
+input, textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 13px;
+    border-radius: 12px;
+    border: 1px solid #e6d3a3;
+    font-size: 15px;
+    font-family: inherit;
+    background: #fff8e6;
+    color: #3b2f1e;
+}
+
+textarea {
+    min-height: 110px;
+    resize: vertical;
+}
+
+input:focus, textarea:focus {
+    outline: none;
+    border-color: #d99a1d;
+}
+
+.verstuur {
+    width: 100%;
+    margin-top: 18px;
+    padding: 15px;
+    font-size: 16px;
+    background: linear-gradient(135deg, #f4b400, #d99a1d);
+    color: white;
+    border: none;
+    border-radius: 15px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.verstuur:active {
+    transform: scale(0.98);
+}
+
+.voetnoot {
+    font-size: 12px;
+    margin-top: 16px;
+    margin-bottom: 0;
+    color: #8a795d;
+}
+
+/* Spambeveiliging: verborgen honeypot */
+.spamveld {
+    display: none !important;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <img src="logo.png" alt="Blom Honing" class="logo">
+
+    <div class="tegel">
+
+        <div class="emoji">🍯</div>
+
+        <h1>Helaas, de honing is op.</h1>
+
+        <p>
+            We wachten op een nieuwe oogst!
+        </p>
+
+        <h2>Contact</h2>
+
+        <p>
+            Heb je een vraag of wil je op de hoogte blijven
+            van de nieuwe oogst? Stuur ons gerust een berichtje.
+        </p>
+
+        <form action="https://formsubmit.co/6a3e4f63da0c01b2d0446b2b702bec21"
+              method="POST">
+
+            <input type="hidden" name="_subject"
+                   value="Nieuw bericht via Blom Honing">
+
+            <input type="hidden" name="_template"
+                   value="table">
+
+            <!-- Spambeveiliging -->
+            <input type="text" name="_honey"
+                   class="spamveld" tabindex="-1"
+                   autocomplete="off">
+
+            <label for="naam">Naam</label>
+            <input type="text" id="naam" name="naam"
+                   placeholder="Je naam" required>
+
+            <label for="email">E-mailadres</label>
+            <input type="email" id="email" name="email"
+                   placeholder="Je e-mailadres" required>
+
+            <label for="bericht">Bericht</label>
+            <textarea id="bericht" name="bericht"
+                      placeholder="Typ hier je bericht..."
+                      required></textarea>
+
+            <button type="submit" class="verstuur">
+                Verstuur bericht
+            </button>
+
+        </form>
+
+        <p class="voetnoot">
+            We nemen zo snel mogelijk contact met je op als de nieuwe oogst beschikbaar is.
+        </p>
+
+    </div>
+
+</div>
+
+</body>
+</html>
